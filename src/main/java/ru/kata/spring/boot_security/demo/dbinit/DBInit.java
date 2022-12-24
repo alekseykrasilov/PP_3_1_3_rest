@@ -5,26 +5,25 @@ import org.springframework.stereotype.Component;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
-import ru.kata.spring.boot_security.demo.service.RoleService;
-import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
+import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
 import javax.annotation.PostConstruct;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Component
 public class DBInit {
 
-    UserService userService;
-    RoleService roleService;
+    UserServiceImpl userServiceImpl;
+    RoleServiceImpl roleServiceImpl;
     RoleRepository roleRepository;
 
     @Autowired
-    public DBInit(UserService userService, RoleService roleService, RoleRepository roleRepository) {
-        this.userService = userService;
-        this.roleService = roleService;
+    public DBInit(UserServiceImpl userServiceImpl, RoleServiceImpl roleServiceImpl, RoleRepository roleRepository) {
+        this.userServiceImpl = userServiceImpl;
+        this.roleServiceImpl = roleServiceImpl;
         this.roleRepository = roleRepository;
     }
 
@@ -47,8 +46,8 @@ public class DBInit {
         user3.setRoles(rolesList);
         roleRepository.save(role1);
         roleRepository.save(role2);
-        userService.saveUser(user1);
-        userService.saveUser(user2);
-        userService.saveUser(user3);
+        userServiceImpl.saveUser(user1);
+        userServiceImpl.saveUser(user2);
+        userServiceImpl.saveUser(user3);
     }
 }
