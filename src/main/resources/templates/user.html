@@ -1,44 +1,100 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
 <html lang="en">
 <head>
-    <title>Spring Security Example</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>User</title>
 </head>
 <body>
-<h1>User, welcome spring boot security page!</h1>
-<br>
-<h2>User</h2>
-<table border="1">
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Age</th>
-    </tr>
-    <tr th:object="${user}">
-        <td th:utext="${user.getId()}">Id</td>
-        <td th:utext="${user.getName()}">Username</td>
-        <td th:utext="${user.getUsername()}">Name</td>
-        <td th:utext="${user.getEmail()}">Surname</td>
-        <td th:utext="${user.getAge()}">Age</td>
-    </tr>
-</table>
+
+<!-- Заголовок -->
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0">
+        <span class="text-white">
+            <span class="font-weight-bold" th:utext="${user.getUsername()}"></span>
+            <span th:utext="' with roles: '"></span>
+            <span th:each="role : ${user.getRoles()}" th:utext="${role.getName()}"></span>
+        </span>
+    </a>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" th:href="@{/logout}">
+                <div class="text-white" th:text="Logout"></div>
+            </a>
+        </li>
+    </ul>
+</nav>
 </br>
-<div>
-    <form th:action="@{/admin/users}" method="get">
-        <input type="submit" value="View all users"/>
-    </form>
-</div>
 </br>
-<div>
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
-    </form>
+
+<!-- сетка -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col col-lg-2">
+            <nav class="col-md-2 bg-white">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/user}">User</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+
+        <div class="col col-lg-10">
+
+            <div class="container-fluid bg-light" style="height: 100vh">
+                <div class="bg-light"><h1>User information-page</h1></div>
+                <div class="card">
+                    <div class="bg-light"><h2>About user</h2></div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Age</th>
+                                <th>Username</th>
+                                <th>Password</th>
+                                <th>Roles</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:object="${user}">
+                                <td th:utext="${user.getId()}">Id</td>
+                                <td th:utext="${user.getName()}">First Name</td>
+                                <td th:utext="${user.getEmail()}">Last Name</td>
+                                <td th:utext="${user.getAge()}">Age</td>
+                                <td th:utext="${user.getUsername()}">Email</td>
+                                <td th:text="${user.getPassword()}">Password</td>
+                                <td><span th:each="role : ${user.getRoles()}"
+                                          th:utext="${role.getName()} + '; '"> </span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 </html>
-
-
-
-

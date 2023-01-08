@@ -13,6 +13,8 @@ public interface UserService {
 
     public User findByUsername (String username);
 
+    public User findByEmail(String email);
+
     public boolean saveUser (User user);
 
     public boolean deleteById (Long id);

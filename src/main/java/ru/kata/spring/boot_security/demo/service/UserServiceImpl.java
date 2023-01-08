@@ -38,6 +38,10 @@ public class UserServiceImpl implements  UserService, UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
+    public User findByEmail (String email) {
+        return userRepository.findByEmail(email);
+    }
+
     public boolean saveUser (User user) {
         User userFromDb = userRepository.findByUsername(user.getUsername());
 
@@ -61,18 +65,6 @@ public class UserServiceImpl implements  UserService, UserDetailsService {
         }
         return false;
     }
-
-//    @Override
-//    @Transactional
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        User user = userRepository.findByUsername(username);
-//
-//        if(user == null) {
-//            throw new UsernameNotFoundException("User not found");
-//        }
-//        return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),
-//                user.getAuthorities());
-//    }
 
     @Transactional
     public void updateUser(User user) {
