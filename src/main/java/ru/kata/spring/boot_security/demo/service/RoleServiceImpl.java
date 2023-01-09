@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class RoleServiceImpl implements RoleService{
+public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
 
@@ -23,7 +23,7 @@ public class RoleServiceImpl implements RoleService{
         return new HashSet<Role>(roleRepository.findAll());
     }
 
-    public Set<Role> getRole (String role) {
+    public Set<Role> getRole(String role) {
         return roleRepository.findByName(role);
     }
 }

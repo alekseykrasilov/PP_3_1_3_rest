@@ -8,5 +8,5 @@ public interface RoleService {
 
     public Set<Role> getAllRoles();
 
-    public Set<Role> getRole (String role);
+    public Set<Role> getRole(String role);
 }

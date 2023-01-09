@@ -17,32 +17,35 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service("userService")
-public class UserServiceImpl implements  UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
+
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     public User findUserById(Long id) {
         Optional<User> userFromDb = userRepository.findById(id);
         return userFromDb.orElse(new User());
     }
 
-    public List<User> getAllUsers () {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public User findByUsername (String username) {
+    public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-    public User findByEmail (String email) {
+    public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
-    public boolean saveUser (User user) {
+    public boolean saveUser(User user) {
         User userFromDb = userRepository.findByUsername(user.getUsername());
 
         if (userFromDb != null) {
@@ -50,15 +53,15 @@ public class UserServiceImpl implements  UserService, UserDetailsService {
         }
 
         Set<Role> roleSet = user.getRoles();
-        if (roleSet == null || roleSet.size() == 0 ) {
-            user.setRoles(Collections.singleton(new Role(1L,"ROLE_USER")));
+        if (roleSet == null || roleSet.size() == 0) {
+            user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return true;
     }
 
-    public boolean deleteById (Long id) {
+    public boolean deleteById(Long id) {
         if (userRepository.findById(id).isPresent()) {
             userRepository.deleteById(id);
             return true;
@@ -72,16 +75,16 @@ public class UserServiceImpl implements  UserService, UserDetailsService {
         userRepository.save(user);
     }
 
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-
-        if(user == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),
-                user.getAuthorities());
-    }
+//    @Override
+//    @Transactional
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        User user = userRepository.findByUsername(username);
+//
+//        if (user == null) {
+//            throw new UsernameNotFoundException("User not found");
+//        }
+//        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+//                user.getAuthorities());
+//    }
 
 }

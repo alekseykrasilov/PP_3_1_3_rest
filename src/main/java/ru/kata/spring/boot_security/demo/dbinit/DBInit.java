@@ -28,10 +28,10 @@ public class DBInit {
     }
 
     @PostConstruct
-    private void initDB () {
+    private void initDB() {
         Set<Role> rolesList = new HashSet<>();
         Role role1 = new Role(1L, "ROLE_USER");
-        Role role2 = new Role(2L,"ROLE_ADMIN" );
+        Role role2 = new Role(2L, "ROLE_ADMIN");
         rolesList.add(role1);
         rolesList.add(role2);
         //password: user1
@@ -40,7 +40,7 @@ public class DBInit {
         //password: user2
         User user2 = new User(2L, "User2", "user2", "user2"
                 , 19, "user2@mail.ru");
-        User user3 = new User(3L,"User3","user3","user3",26,"user3@mail.ru");
+        User user3 = new User(3L, "User3", "user3", "user3", 26, "user3@mail.ru");
         user1.setRoles(Collections.singleton(role2));
         user2.setRoles(Collections.singleton(role1));
         user3.setRoles(rolesList);

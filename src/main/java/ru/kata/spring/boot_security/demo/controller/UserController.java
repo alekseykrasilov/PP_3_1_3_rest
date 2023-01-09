@@ -21,14 +21,14 @@ public class UserController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserController (UserServiceImpl userServiceImpl, RoleServiceImpl roleServiceImpl, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserController(UserServiceImpl userServiceImpl, RoleServiceImpl roleServiceImpl, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userServiceImpl = userServiceImpl;
         this.roleServiceImpl = roleServiceImpl;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @GetMapping("/user")
-    public String showUserInfo (Principal principal, Model model) {
+    public String showUserInfo(Principal principal, Model model) {
         User user = userServiceImpl.findByUsername(principal.getName());
         model.addAttribute("user", user);
         return "user";

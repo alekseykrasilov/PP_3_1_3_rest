@@ -9,15 +9,15 @@ public interface UserService {
 
     public User findUserById(Long id);
 
-    public List<User> getAllUsers ();
+    public List<User> getAllUsers();
 
-    public User findByUsername (String username);
+    public User findByUsername(String username);
 
     public User findByEmail(String email);
 
-    public boolean saveUser (User user);
+    public boolean saveUser(User user);
 
-    public boolean deleteById (Long id);
+    public boolean deleteById(Long id);
 
     public void updateUser(User user);
 }
