@@ -12,7 +12,7 @@ import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("/admin")
+//@RequestMapping("/admin")
 public class AdminController {
 
     private final UserServiceImpl userServiceImpl;
@@ -28,7 +28,7 @@ public class AdminController {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    @GetMapping()
+    @GetMapping("/admin")
     public String showAllUsers(Model model, Principal principal) {
         User admin = userServiceImpl.findByUsername(principal.getName());
         model.addAttribute("users", userServiceImpl.getAllUsers());
@@ -37,20 +37,20 @@ public class AdminController {
         return "admin";
     }
 
-    @PostMapping("/new")
+    @PostMapping("/admin")
     public String createUser(@ModelAttribute("user") User user, @RequestParam("rolesList") String roles) {
         user.setRoles(roleServiceImpl.getRole(roles));
         userServiceImpl.saveUser(user);
         return "redirect:/admin";
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/admin/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userServiceImpl.deleteById(id);
         return "redirect:/admin";
     }
 
-    @PostMapping("/edit/{id}")
+    @PostMapping("/admin/edit/{id}")
     public String updateUser(@ModelAttribute("user") User user,
                              @PathVariable("id") Long id, @RequestParam(value = "rolesList", required = true) String roles) {
         user.setRoles(roleServiceImpl.getRole(roles));

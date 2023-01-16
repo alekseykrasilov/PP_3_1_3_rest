@@ -24,14 +24,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsServiceImpl userDetailsServiceImpl;
 
-    @Autowired
+
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public WebSecurityConfig(UserDetailsServiceImpl userDetailsServiceImpl,
-                             SuccessUserHandler successUserHandler) {
+                             SuccessUserHandler successUserHandler, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDetailsServiceImpl = userDetailsServiceImpl;
         this.successUserHandler = successUserHandler;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -39,8 +40,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/", "/login").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().successHandler(successUserHandler)
@@ -56,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    protected DaoAuthenticationProvider daoAuthenticationProvider() {
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder);
         daoAuthenticationProvider.setUserDetailsService(userDetailsServiceImpl);
